@@ -18,9 +18,10 @@ main(){
 	lista->prox = NULL;
 	int i;
 	srand(time(NULL));
-	for(i=0;i<=5;i++){
-		inserir_no_inicio(rand(),lista);
-	}
+	inserir_no_inicio(2,lista);
+	inserir_no_inicio(10,lista);
+	inserir_no_inicio(5,lista);
+	inserir_no_inicio(1,lista);
 	mostrar(lista);
 }
 
