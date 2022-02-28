@@ -38,19 +38,24 @@ def FilterBase(base):
     return DatabaseFiltered
     
 def SearchBases():       
-    ListXLS = glob.glob("../@BASES/*.xls")
+    ListXLS = glob.glob("BASES/*.xlsx")
     return ListXLS
 def FusionOfBases(xls):
     executions = 0
-    for i in xls:
-        executions = executions + 1
-        PorCent = executions*100/len(xls)
-        print("CONVERTENDO --------> %d P/Cent" % (PorCent))
-        base = pd.read_excel(i)        
+    print(len(xls))
+    if len(xls) < 1:
+        base = pd.read_excel(xls[0])        
         BaseFiltered = FilterBase(base)
-        frame.append(BaseFiltered)    
+    else:
+        for i in xls:
+            executions = executions + 1
+            PorCent = executions*100/len(xls)
+            print("CONVERTENDO --------> %d P/Cent" % (PorCent))
+            base = pd.read_excel(i)        
+            BaseFiltered = FilterBase(base)
+            frame.append(BaseFiltered)    
     AllInOne = pd.concat(frame)    
-    AllInOne.to_excel("../@RESULTS/ALLINONE.xlsx")
+    AllInOne.to_excel("RESULT/ALLINONE.xlsx")
 
 def FirebaseSender():
     print("Seending")
@@ -58,13 +63,19 @@ def FirebaseSender():
 def GenerateIds(): 
     group0 = ""
     IdGenerated = ""
-    for t in range(3):
-        for i in range(4):
+    numberOfGroups = 3
+    numberNumbersGroup = 4
+    for t in range(numberOfGroups):
+        for i in range(numberNumbersGroup):
             value = randint(0, 9)
             group0 = group0 + str(value)
-        if t < 2:
+        if t < numberOfGroups-1:
             group0 = group0 + " "
         IdGenerated = group0 
+    for x in IdCode:
+        if x == IdGenerated:
+            print("Duplicidade encontrada")
+            GenerateIds()
     return IdGenerated    
     
 
